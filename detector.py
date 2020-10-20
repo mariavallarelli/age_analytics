@@ -45,7 +45,6 @@ def load_tweets(args):
     df2_tweet = df1_tweet.groupby(['_birthday_screenName'], as_index=False)
     df2 = df2_tweet.first()
     print(len(df2_tweet))
-    # print(len(df2))
     # check sample is balanced
     print(df2.loc[:, '_range_age'].value_counts())
     # balance dataset
@@ -167,7 +166,6 @@ def train_model(args):
     print("Grid scores on development set:")
     print('Scoring result')
     #print(gs.best_score_)
-    ######
     # Doing classification again, using the best parameters, as selected by Grid Search
     clsfParams = {
         'classifier__C': 100,
@@ -240,7 +238,7 @@ def preproc_pipeline():
 
         ]
     )
-'''
+"""
 These features aren't much significative.
             ('num_url', Pipeline(
                 [
@@ -263,7 +261,7 @@ These features aren't much significative.
                     ('scaler', StandardScaler())
                 ])
              )
-'''
+"""
 
 def adjust_sample(dfraw, permitted_labels, target_column_name):
     """This method is used to create a balanced dataset
