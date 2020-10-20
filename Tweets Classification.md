@@ -9,4 +9,4 @@ the output is a train.csv and score.csv. The first one is used for train and val
      > python detector.py -l  "train.csv,score.csv"
   - plot the top relevant 50 keywords for age group
   
-	> run script on google Colab 
+	> run script ColabNotebook_KeywordsAgeGroupsTweets.ipynb on google Colab 
