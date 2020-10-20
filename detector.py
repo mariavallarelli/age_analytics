@@ -146,13 +146,9 @@ def train_model(args):
 
     # Setting for each parameter the value space (i.e., the set of values to evaluate)
     paramSpace = {'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100],  # Values for grid search should be enclosed by []
-                  'classifier__multi_class': ['ovr'],
-                  # default value, otherwise lot of warnings # one vs the rest. Strategy to turn a binary classifier into a multil-label classifier
+                  'classifier__multi_class': ['ovr'],# default value, otherwise lot of warnings # one vs the rest. Strategy to turn a binary classifier into a multil-label classifier
                   'classifier__solver': ['liblinear'],
-                  'classifier__class_weight': [None, 'balanced'],  # if the classes were imbalanced, we could try this approach
-                  #'union__transformer_list':[{'vectorizer__ngram_range': [(1, 1), (1, 2), (1, 3)],
-                  #                            'vectorizer__max_df': [0.7],
-                  #                            'vectorizer__min_df': [2, 4]}]
+                  'classifier__class_weight': [None, 'balanced'],  # if the classes were imbalanced, we could try this approach             
                   }
 
     paramSpace1 = { 'classifier__n_estimators': [20, 50, 100, 200],
@@ -168,20 +164,14 @@ def train_model(args):
     # ora mostro il tempo di fine
     print("--- %s seconds ---" % (time.time() - start_time))
     print("Best parameters set found on development set:")
-    print()
-    #print(gs.best_params_)
-    print()
     print("Grid scores on development set:")
     print('Scoring result')
     #print(gs.best_score_)
     ######
-
-
     # Doing classification again, using the best parameters, as selected by Grid Search
     clsfParams = {
         'classifier__C': 100,
         'classifier__multi_class': 'ovr',
-        # default value, otherwise lot of warnings # one vs the rest. Strategy to turn a binary classifier into a multil-label classifier
         'classifier__solver': 'liblinear'
     }
     clsfParams1 = {'classifier__n_estimators': 100,
@@ -229,7 +219,6 @@ def preproc_pipeline():
                     ('TextProcessor', TextProcessor()),
                     ('vectorizer', CountVectorizer(stop_words=my_stop_words, ngram_range=(1,1),
                                                    min_df=2, max_df=0.7, preprocessor=unityFunction)),
-                    #('tfid', TfidfTransformer()),
                     ('inputer', SimpleImputer(strategy='most_frequent'))
 
                 ])
