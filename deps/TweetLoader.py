@@ -10,12 +10,10 @@ def process_tweet(tweet_obj):
     exd_full_text = ''
     rt_text = ''
     rt_ext_text = ''
-    #print(tweet_obj)
     ''' User info'''
     # Store the user screen name in 'user-screen_name'
     tweet_obj['user-screen_name'] = tweet_obj['user']['screen_name']
     tweet_obj['user_id'] = tweet_obj['user']['id_str']
-    # https://twitter.com/i/user/611067272
     tweet_obj['followers_count'] = tweet_obj['user']['followers_count']
 
     ''' Text info'''
@@ -30,22 +28,14 @@ def process_tweet(tweet_obj):
         text = tweet_obj['text']
 
     if 'retweeted_status' in tweet_obj:
-        # Store the retweet user screen name in
-        # 'retweeted_status-user-screen_name'
-        # tweet_obj['retweeted_status-user-screen_name'] = \
-        #    tweet_obj['retweeted_status']['user']['screen_name']
-        # tweet_obj['retweeted_favorite_count']= tweet_obj['retweeted_status']['favorite_count']
-
         # Store the retweet text in 'retweeted_status-text'
         rt_text = tweet_obj['retweeted_status']['text']
 
         if 'extended_tweet' in tweet_obj['retweeted_status']:
             # Store the extended retweet text in
-            # 'retweeted_status-extended_tweet-full_text'
             rt_ext_text = tweet_obj['retweeted_status']['extended_tweet']['full_text']
     if 'quoted_status' in tweet_obj:
         # Store the retweet user screen name in
-        # 'retweeted_status-user-screen_name'
         tweet_obj['quoted_status-user-screen_name'] = (
             tweet_obj['quoted_status']['user']['screen_name'])
 
@@ -54,7 +44,6 @@ def process_tweet(tweet_obj):
 
         if 'extended_tweet' in tweet_obj['quoted_status']:
             # Store the extended retweet text in
-            # 'retweeted_status-extended_tweet-full_text'
             tweet_obj['quoted_status-extended_tweet-full_text'] = (
                 tweet_obj['quoted_status']['extended_tweet']['full_text'])
     if rt_ext_text:
@@ -87,9 +76,6 @@ def load(file):
         tempdf = pd.DataFrame(res, columns=columns)
         tempdf.loc[:, '_owner_birthday_wishes'] = tempdf['text'].apply(
             lambda x: find_happy_birthday_tome(x))
-        # TO DETECT OTHERS BIRTHDAY SCREEN-NAME
-        # tempdf.loc[:, '_birthday_wishes'] = tempdf['text'].apply(
-        #    lambda x: find_happy_birthday_to_someone_else(x))
         tempdf.loc[:, '_year_of_birth'] = tempdf['user-screen_name'].apply(
             lambda x: find_year_of_birth(x))
         tempdf.loc[:, '_age'] = tempdf.apply(lambda x: get_age(x), axis=1)
